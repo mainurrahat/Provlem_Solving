@@ -161,7 +161,7 @@ void addBinary(string a, string b)
     cout << res << endl;
 }
 vector<ll> prime_vec;
-const int Lim = 1000;
+const int Lim =10000000 + 20;
 int primeCnt[Lim + 1];
 void sieve() /// Sieve of Eratosthenes
 {
@@ -202,32 +202,42 @@ void divisors()
             sum_div[j] += i;             // add to sum of divisors
         }
 }
+int cntPrime[Lim + 1];
 void solve()
 {
-
-    ll n;
-    cin >> n;
-    if (n < 3)
-        cout << 1 << endl;
-    else
-        cout << 2 << endl;
-    for (int i = 2; i <= n + 1; i++)
-    {
-        if (IsPrime(i))
-            cout << 1 << " ";
-        else
-            cout << 2 << " ";
-    }
-    cout << endl;
+    int n;
+    cin>>n;
+    cout << cntPrime[n] << endl;
 }
 
 int main()
 {
     FIO;
     clock_t q = clock();
+    int limX = 3200;
+    int limY = 60;
+    for (int x = 1; x <= limX; x++)
+    {
+        for (int y = 1; y <= limY; y++)
+        {
+            int val = (x * x) + (y * y * y * y);
+            if (val <= Lim && IsPrime(val))
+            {
+                cout<<x<<"^2 +"<<y<<"^4   "<<val<<endl;
+                cntPrime[val] = 1;
+            }
+        }
+    }
+
+    for (int i = 1; i <= Lim; i++)
+    {
+        cntPrime[i] += cntPrime[i - 1];
+    }
+
     int t = 1;
-    //    cin>>t;
+    cin>>t;
     while (t--)
         solve();
     // cerr << "Run Time : " << ((double)(clock() - q) / CLOCKS_PER_SEC);
 }
+
